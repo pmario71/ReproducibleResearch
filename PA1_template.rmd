@@ -1,0 +1,41 @@
+# Assignment 1
+========================================================
+
+Loading data:
+
+```{r}
+activity <- read.csv("D:/Projects/GitHub/ReproducibleResearch/activity.csv")
+```
+
+## Mean total number of steps taken per day
+
+```{r}
+activityCleaned <- activity[complete.cases(activity),]
+stepsByDay <- tapply(X = activity$steps, INDEX = activity$date, FUN = sum)
+totalNumberOfStepsPerDay <- stepsByDay[complete.cases(stepsByDay)]
+```
+
+Total number of steps taken per day:
+`r totalNumberOfStepsPerDay`
+
+```{r}
+hist(totalNumberOfStepsPerDay,main = "Total Number of Steps per Day", xlab = "steps/day")
+```
+
+        | value
+--------|--------------------------------------
+Mean    |`r mean(totalNumberOfStepsPerDay)`
+Median  |`r median(totalNumberOfStepsPerDay)`
+
+```{r}
+stepsByTimeOfDay <- tapply(X = activityCleaned$steps, INDEX = activityCleaned$interval, FUN = sum)
+plot(names(stepsByTimeOfDay), y = stepsByTimeOfDay)
+```
+
+Time of highest activity: `r names(stepsByTimeOfDay[which.max(stepsByTimeOfDay)])`
+
+Rows containing NA values: `r nrow(activity)-nrow(activityCleaned)`
+
+```{r}
+
+```
